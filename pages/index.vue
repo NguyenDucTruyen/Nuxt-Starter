@@ -4,6 +4,7 @@ async function getHello() {
   const data = await $api('api/hello')
   console.log(data)
 }
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -21,6 +22,16 @@ async function getHello() {
     <a href="/api/auth/github">Login with GitHub</a>
     <br>
     <a href="/api/auth/google">Login with Google</a>
+  </div>
+  <div class="grid gap-4">
+    <Button type="button" class="w-full">
+      <Icon name="IconGoogle" class="w-8 h-8" />
+      Login with Google
+    </Button>
+    <Button type="button" class="w-full" @click="authStore.loginWithGitHub()">
+      <Icon name="IconGoogle" class="w-8 h-8" />
+      Login with GitHub
+    </Button>
   </div>
   <button @click="getHello">
     Get Hello

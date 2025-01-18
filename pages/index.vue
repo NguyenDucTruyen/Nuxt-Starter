@@ -1,32 +1,28 @@
-<script setup lang="ts">
-type Theme = 'light' | 'dark'
-
-function setColorTheme(newTheme: Theme) {
-  useColorMode().preference = newTheme
+<script setup>
+const { loggedIn, user, session, clear } = useUserSession()
+async function getHello() {
+  const data = await $api('api/hello')
+  console.log(data)
 }
 </script>
 
 <template>
-  <!-- This example requires Tailwind CSS v2.0+ -->
-  <div class="h-screen dark:accent-slate-900">
-    <div>
-      <div class="navbar relative dark:bg-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-          <div class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-            <button class="ml-5" @click="setColorTheme($colorMode.preference === 'dark' ? 'light' : 'dark')">
-              {{ $colorMode.preference === 'dark' ? 'Light' : 'Dark' }} Mode
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button @click="() => notifySuccess({ content: 'Hello, world!' })">
-      Toast
+  <ThemeToggle />
+
+  <div v-if="loggedIn">
+    <h1>Welcome {{ user }}!</h1>
+    <p>Logged in since {{ session.loggedInAt }}</p>
+    <button @click="clear">
+      Logout
     </button>
-    <div class="justify-items-center flex h-full items-top">
-      <div class="text-9xl mt-16">
-        <h1>Nuxt Dark Mode is Easy</h1>
-      </div>
-    </div>
   </div>
+  <div v-else>
+    <h1>Not logged in</h1>
+    <a href="/api/auth/github">Login with GitHub</a>
+    <br>
+    <a href="/api/auth/google">Login with Google</a>
+  </div>
+  <button @click="getHello">
+    Get Hello
+  </button>
 </template>

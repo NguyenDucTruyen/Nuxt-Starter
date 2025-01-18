@@ -12,6 +12,13 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_BASE || 'http://localhost:3000', // Biến public có sẵn ở cả client và server
+    },
+  },
+
   modules: [
     '@pinia/nuxt',
     '@vueuse/nuxt',
@@ -20,6 +27,14 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     'nuxt-auth-utils',
   ],
+
+  components: [
+    {
+      path: '@/components',
+      pathPrefix: false,
+    },
+  ],
+
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -31,7 +46,10 @@ export default defineNuxtConfig({
      */
     componentDir: './components/ui',
   },
+
   colorMode: {
     classSuffix: '',
   },
+
+  compatibilityDate: '2025-01-18',
 })

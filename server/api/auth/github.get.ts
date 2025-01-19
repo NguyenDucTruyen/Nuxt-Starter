@@ -13,7 +13,7 @@ export default defineOAuthGitHubEventHandler({
         role: EnumUserRole.USER,
         o_auth_id: user.id,
       })
-      setUserSession(event, { user: res[0] })
+      await setUserSession(event, { user: res[0] })
       return sendRedirect(event, '/')
     }
 
@@ -21,7 +21,7 @@ export default defineOAuthGitHubEventHandler({
       return sendRedirect(event, '/auth/login?errorMessage=User is inactive')
     }
 
-    setUserSession(event, { user: data[0] })
+    await setUserSession(event, { user: data[0] })
     return sendRedirect(event, '/')
   },
 })

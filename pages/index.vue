@@ -11,7 +11,7 @@ const authStore = useAuthStore()
   <ThemeToggle />
 
   <div v-if="loggedIn">
-    <h1>Welcome {{ user }}!</h1>
+    <h1>Welcome {{ user }}</h1>
     <p>Logged in since {{ session.loggedInAt }}</p>
     <button @click="clear">
       Logout

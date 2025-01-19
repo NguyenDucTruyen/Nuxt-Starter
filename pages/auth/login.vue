@@ -28,7 +28,7 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit(async (values) => {
   await authStore.loginWithCredentials(values)
-  navigateTo('/')
+  window.location.href = '/'
 })
 
 function loginWithGitHub() {

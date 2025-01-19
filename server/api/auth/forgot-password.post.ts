@@ -15,12 +15,11 @@ export default defineEventHandler(async (event) => {
         message: 'Email not found',
       })
     }
-    const res = await sendMail({
+    await sendMail({
       to: email,
       subject: 'Password Reset',
-      text: `Please click on the link to reset your password: ${runtimeConfig.public.appBaseUrl}/auth/reset-password?token=${otp}`,
+      text: `Please click on the link to reset your password: ${runtimeConfig.public.appBaseUrl}/auth/reset-password?email=${email}&token=${otp}`,
     })
-    console.log('res::', res)
     setResponseStatus(event, 200)
     return {
       message: 'Password reset link has been sent to your email',

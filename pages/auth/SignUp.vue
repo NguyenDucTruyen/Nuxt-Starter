@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth'
 import { signupValidator } from '@/utils/validation'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 
+definePageMeta({
+  layout: 'auth',
+})
 const router = useRouter()
 const authStore = useAuthStore()
 
@@ -12,8 +14,11 @@ const form = useForm({
 })
 
 const onSubmit = form.handleSubmit(async (values) => {
-  await authStore.register(values)
+  await authStore.signupWithCredentials(values)
   router.push('/auth/login')
+  notifySuccess({
+    content: 'Account created successfully',
+  })
 })
 </script>
 
@@ -28,15 +33,8 @@ const onSubmit = form.handleSubmit(async (values) => {
       </CardDescription>
     </CardHeader>
     <CardContent>
-      <div class="grid gap-4">
-        <InputValidator
-          id="email"
-          type="email"
-          label="Email"
-          placeholder="m@example.com"
-          required
-          name="email"
-        />
+      <div class="grid">
+        <InputValidator id="email" type="email" label="Email" placeholder="youremail@gmai.com" name="email" />
         <InputValidator id="password" label="Password" placeholder="Password" type="password" name="password" />
         <InputValidator id="confirmPassword" label="Confirm password" placeholder="Confirm Password" type="password" name="confirmPassword" />
 

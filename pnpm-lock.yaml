@@ -11,15 +11,12 @@ importers:
       '@nuxtjs/tailwindcss':
         specifier: 6.13.1
         version: 6.13.1(magicast@0.3.5)(rollup@4.30.1)
-<<<<<<< Updated upstream
-      bcrypt:
-        specifier: ^5.1.1
-        version: 5.1.1
-=======
       '@vee-validate/zod':
         specifier: ^4.14.6
         version: 4.15.0(vue@3.5.13(typescript@5.7.3))(zod@3.24.1)
->>>>>>> Stashed changes
+      bcrypt:
+        specifier: ^5.1.1
+        version: 5.1.1
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -99,6 +96,12 @@ importers:
       jiti:
         specifier: ^2.4.2
         version: 2.4.2
+      nodemailer:
+        specifier: ^6.9.16
+        version: 6.9.16
+      nuxt-nodemailer:
+        specifier: ^1.1.2
+        version: 1.1.2(magicast@0.3.5)(nodemailer@6.9.16)(rollup@4.30.1)
       shadcn-nuxt:
         specifier: ^0.11.3
         version: 0.11.3(magicast@0.3.5)(rollup@4.30.1)
@@ -3680,6 +3683,10 @@ packages:
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
 
+  nodemailer@6.9.16:
+    resolution: {integrity: sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ==}
+    engines: {node: '>=6.0.0'}
+
   nopt@5.0.0:
     resolution: {integrity: sha512-Tbj67rffqceeLpcRXrT7vKAN8CwfPeIBgM7E6iBkmKLV7bEMwpGgYLGv0jACUsECaa/vuxP0IjEont6umdMgtQ==}
     engines: {node: '>=6'}
@@ -3731,6 +3738,11 @@ packages:
         optional: true
       '@simplewebauthn/server':
         optional: true
+
+  nuxt-nodemailer@1.1.2:
+    resolution: {integrity: sha512-oYi0AnEZu56euRxJ/G7NAQLmRct9ORgKvxF3AcAbVlxfKJJQ7kNPZnlymQbzg9F/SLBlQgSE+mSQR/3Wz6JOIg==}
+    peerDependencies:
+      nodemailer: ^6.9.13
 
   nuxt@3.15.1:
     resolution: {integrity: sha512-8sKgqjhu5JoaVv89TnBW5S0jvsXRrEWGF+CguYUPK+6sRAtNcJAwcWxd4pEmURYQ2D0jjdfgr/VyH0i9CdhkBQ==}
@@ -9153,6 +9165,8 @@ snapshots:
 
   node-releases@2.0.19: {}
 
+  nodemailer@6.9.16: {}
+
   nopt@5.0.0:
     dependencies:
       abbrev: 1.1.1
@@ -9209,6 +9223,15 @@ snapshots:
     transitivePeerDependencies:
       - argon2
       - bcrypt
+      - magicast
+      - rollup
+      - supports-color
+
+  nuxt-nodemailer@1.1.2(magicast@0.3.5)(nodemailer@6.9.16)(rollup@4.30.1):
+    dependencies:
+      '@nuxt/kit': 3.15.1(magicast@0.3.5)(rollup@4.30.1)
+      nodemailer: 6.9.16
+    transitivePeerDependencies:
       - magicast
       - rollup
       - supports-color

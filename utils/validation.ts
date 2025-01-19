@@ -9,14 +9,14 @@ export const passwordSchema = z
   .refine(value => /[a-z]/.test(value), { message: 'Password must include at least one lowercase letter' })
   .refine(value => /[A-Z]/.test(value), { message: 'Password must include at least one uppercase letter' })
   .refine(value => /\d/.test(value), { message: 'Password must include at least one number' })
-  .refine(value => /[@$!%*?&]/.test(value), { message: 'Password must include at least one special character (@$!%*?&)' })
+  // .refine(value => /[@$!%*?&]/.test(value), { message: 'Password must include at least one special character (@$!%*?&)' })
 
-export const requiredStringSchema = z.string()
+export const requiredStringSchema = z.string().min(1, { message: 'Required' })
 
 export const signupValidator = z
   .object({
     email: emailSchema,
-    password: passwordSchema, 
+    password: passwordSchema,
     confirmPassword: passwordSchema,
   })
   .refine(data => data.password === data.confirmPassword, {
@@ -29,12 +29,13 @@ export const emailValidator = z.object({
 })
 
 export const loginValidator = z.object({
-  email: emailSchema,
-  password: requiredStringSchema,
+  email: emailSchema, 
+  password: z.string().min(1, { message: 'Password is required' }),
 })
 
 export const resetPasswordValidator = z
   .object({
+    email: emailSchema,
     token: requiredStringSchema,
     password: passwordSchema,
     confirmPassword: passwordSchema,

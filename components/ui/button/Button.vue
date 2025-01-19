@@ -8,6 +8,7 @@ interface Props extends PrimitiveProps {
   variant?: ButtonVariants['variant']
   size?: ButtonVariants['size']
   class?: HTMLAttributes['class']
+  isLoading?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -21,6 +22,12 @@ const props = withDefaults(defineProps<Props>(), {
     :as-child="asChild"
     :class="cn(buttonVariants({ variant, size }), props.class)"
   >
+  <template v-if="props.isLoading">
+    <Icon name="IconLoading" />
+    Please wait
+  </template>
+  <template v-else>
     <slot />
+  </template>
   </Primitive>
 </template>

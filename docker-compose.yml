@@ -2,7 +2,7 @@
 version: '3.7'
 
 services:
-  db:
+  progres:
     image: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-nuxt}
@@ -13,3 +13,20 @@ services:
     ports:
       - "${POSTGRES_PORT}:5432"
     restart: unless-stopped
+    networks:
+      - nuxt-starter
+  mailhog:
+    container_name: nuxt-mailhog
+    image: mailhog/mailhog
+    ports:
+      - "${SMTP_PORT:-1025}:1025"
+      - "${SMTP_WEB_PORT:-8025}:8025"
+    restart: unless-stopped
+    networks:
+      - nuxt-starter
+
+networks:
+  nuxt-starter:
+    driver: bridge
+
+

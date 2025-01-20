@@ -41,7 +41,6 @@ const typeInputComputed = computed(() => {
               :disabled="props.disabled"
               v-bind="componentField"
               class="pr-9"
-              autocomplete="off"
             />
           </slot>
           <div
@@ -52,7 +51,7 @@ const typeInputComputed = computed(() => {
             <Icon v-if="!isShowPassword" name="IconEyeOff" class="w-6 h-6" />
             <Icon v-else name="IconEyeOn" class="w-6 h-6" />
           </div>
-          <FormMessage class="error-message absolute bottom-0" />
+          <FormMessage class="error-message absolute bottom-1 text-xs" />
         </FormControl>
       </FormItem>
     </div>
@@ -60,7 +59,5 @@ const typeInputComputed = computed(() => {
 </template>
 
 <style scoped>
-.error-message {
-  margin-top: 4px !important;
-}
+
 </style>

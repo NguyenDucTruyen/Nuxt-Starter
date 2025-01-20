@@ -12,8 +12,14 @@ definePageMeta({
 const authStore = useAuthStore()
 const route = useRoute()
 const router = useRouter()
-const isLoading= ref(false)
-// const {} = useLazyFetch()
+const body = ref({
+  email: '',
+  password: '',
+})
+const { status, execute } = useAsyncData(async () => {
+  await authStore.loginWithCredentials(body.value)
+  window.location.href = '/'
+}, { immediate: false })
 if (route.query?.errorMessage) {
   notifyError({
     content: route.query?.errorMessage as string,
@@ -27,8 +33,8 @@ const form = useForm({
 })
 
 const onSubmit = form.handleSubmit(async (values) => {
-  await authStore.loginWithCredentials(values)
-  navigateTo('/')
+  body.value = values
+  await execute()
 })
 
 function loginWithGitHub() {
@@ -61,7 +67,7 @@ function loginWithGoogle() {
               </RouterLink>
             </div>
           </div>
-          <Button :is-loading="isLoading" type="submit">
+          <Button :is-loading="status === 'pending'" type="submit">
             Login
           </Button>
         </div>

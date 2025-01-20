@@ -14,13 +14,20 @@ definePageMeta({
 const form = useForm({
   validationSchema: toTypedSchema(emailValidator),
 })
-
-const onSubmit = form.handleSubmit(async (values) => {
-  const res = await authStore.sendEmailResetPassword(values)
+const body = ref({
+  email: '',
+})
+const { status, execute } = useAsyncData(async () => {
+  const res = await authStore.sendEmailResetPassword(body.value)
   notifySuccess({
     content: res.message,
   })
-  router.push(`/auth/reset-password?email=${values.email}`)
+  router.push(`/auth/reset-password?email=${body.value.email}`)
+}, { immediate: false })
+
+const onSubmit = form.handleSubmit(async (values) => {
+  body.value = values
+  await execute()
 })
 </script>
 
@@ -40,7 +47,7 @@ const onSubmit = form.handleSubmit(async (values) => {
           <div class="grid gap-2">
             <InputValidator id="email" type="email" label="Email" placeholder="youremail@gmai.com" name="email" />
           </div>
-          <Button type="submit">
+          <Button :is-loading="status === 'pending'" type="submit">
             Send Email
           </Button>
         </div>

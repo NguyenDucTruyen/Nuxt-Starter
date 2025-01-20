@@ -8,17 +8,25 @@ definePageMeta({
 })
 const router = useRouter()
 const authStore = useAuthStore()
-
+const body = ref({
+  email: '',
+  password: '',
+  confirmPassword: '',
+})
+const { status, execute } = useAsyncData(async () => {
+  await authStore.signupWithCredentials(body.value)
+  router.push('/auth/login')
+  notifySuccess({
+    content: 'Account created successfully',
+  })
+}, { immediate: false })
 const form = useForm({
   validationSchema: toTypedSchema(signupValidator),
 })
 
 const onSubmit = form.handleSubmit(async (values) => {
-  await authStore.signupWithCredentials(values)
-  router.push('/auth/login')
-  notifySuccess({
-    content: 'Account created successfully',
-  })
+  body.value = values
+  await execute()
 })
 </script>
 
@@ -38,7 +46,7 @@ const onSubmit = form.handleSubmit(async (values) => {
         <InputValidator id="password" label="Password" placeholder="Password" type="password" name="password" />
         <InputValidator id="confirmPassword" label="Confirm password" placeholder="Confirm Password" type="password" name="confirmPassword" />
 
-        <Button type="submit" class="w-full">
+        <Button :is-loading="status === 'pending'" type="submit" class="w-full mt-4">
           Create an account
         </Button>
       </div>

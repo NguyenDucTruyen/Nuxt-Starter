@@ -18,13 +18,22 @@ const query = route.query
 if (!query.email) {
   router.push('/auth/login')
 }
-const isLoading = ref(false)
-const onSubmit = form.handleSubmit(async (values) => {
-  await authStore.resetPassword(values)
+const body = ref({
+  email: query.email as string,
+  token: query.token as string,
+  password: '',
+  confirmPassword: '',
+})
+const { status, execute } = useAsyncData(async () => {
+  await authStore.resetPassword(body.value)
   notifySuccess({
     content: 'Password reset successfully',
   })
   router.push('/auth/login')
+}, { immediate: false })
+const onSubmit = form.handleSubmit(async (values) => {
+  body.value = values
+  await execute()
 })
 </script>
 
@@ -53,14 +62,8 @@ const onSubmit = form.handleSubmit(async (values) => {
         <InputValidator id="password" label="Password" placeholder="Password" type="password" name="password" />
         <InputValidator id="confirmPassword" label="Confirm password" placeholder="Confirm Password" type="password" name="confirmPassword" />
         <div class="flex justify-center my-4">
-          <Button type="submit" :disabled="isLoading">
-            <template v-if="isLoading">
-              <Icon name="IconLoading" />
-              Please wait
-            </template>
-            <template v-else>
-              Reset Password
-            </template>
+          <Button type="submit" :disabled="status === 'pending'">
+            Reset Password
           </Button>
         </div>
       </div>

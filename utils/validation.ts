@@ -29,7 +29,7 @@ export const emailValidator = z.object({
 })
 
 export const loginValidator = z.object({
-  email: emailSchema, 
+  email: emailSchema,
   password: z.string().min(1, { message: 'Password is required' }),
 })
 
@@ -44,3 +44,10 @@ export const resetPasswordValidator = z
     message: 'Password confirmation does not match',
     path: ['confirmPassword'],
   })
+
+export const updateProfileValidator = z.object({
+  firstName: z.string().min(3).max(32),
+  lastName: z.string().min(2).max(32),
+  gender: z.string().min(4, { message: 'Select your gender' }),
+  dayOfBirth: z.string().min(8, { message: 'Select your date of birth' }),
+})

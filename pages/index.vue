@@ -1,5 +1,3 @@
 <template>
-  <UserDropdown/>
-  <h1>Hello</h1>
-  <ThemePicker/>
+  hello
 </template>

@@ -127,7 +127,7 @@ async function confirmDeletePhoto() {
     </Button>
     <Button type="submit" :disabled="isLoading">
       <template v-if="isLoading">
-        <Icon name="IconLoading" />
+        <Icon name="IconSpinner" />
         Please wait
       </template>
       <template v-else>

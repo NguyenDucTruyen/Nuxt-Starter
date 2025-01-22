@@ -26,7 +26,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/color-mode',
     'nuxt-auth-utils',
-    'nuxt-nodemailer'
+    'nuxt-nodemailer',
+    'nuxt-svgo',
   ],
 
   nodemailer: process.env.NODE_ENV === 'development'

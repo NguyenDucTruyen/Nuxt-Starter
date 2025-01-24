@@ -16,5 +16,7 @@ const component = defineAsyncComponent(() => import(`@/assets/icons/${props.name
     :is="component"
     role="img"
     class="inline-block fill-current m-0 p-0"
-  />
+  >
+    <slot />
+  </component>
 </template>

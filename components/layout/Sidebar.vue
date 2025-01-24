@@ -1,7 +1,16 @@
+<script setup lang="ts">
+const sidebarStore = useSidebarStore()
+
+</script>
+
 <template>
-  <div id="main-nav" class="w-1/2 md:w-1/3 lg:w-64 fixed md:top-0 md:left-0 h-screen lg:block border-r z-30">
+  <div 
+    id="main-nav" 
+    class="w-full sm:w-1/3 lg:w-64 fixed md:top-0 md:left-0 h-screen lg:block border-r bg-background z-30 translate-x-"
+    :class="{'max-lg:-translate-x-': !sidebarStore.isOpen}"
+  >
     <div class="w-full h-20 border-b flex px-4 items-center mb-8">
-      <p class="font-semibold text-3xl  pl-4">
+      <p class="font-semibold hidden lg:block text-3xl  pl-4">
         ADMIN
       </p>
     </div>

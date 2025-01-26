@@ -1,5 +1,5 @@
-import LoadingSvg from '@/assets/icons/Ellipsis.svg'
-import ErrorSvg from '@/assets/icons/Error.svg'
+import LoadingSvg from '@/assets/images/ellipsis.png'
+import ErrorSvg from '@/assets/images/error.png'
 import VueLazyload from 'vue-lazyload'
 
 export default defineNuxtPlugin((nuxtApp) => {

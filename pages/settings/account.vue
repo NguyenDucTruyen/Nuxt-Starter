@@ -2,12 +2,12 @@
 import { useConfirmStore } from '@/stores/confirm'
 import { updateProfileValidator } from '@/utils/validation'
 import { toTypedSchema } from '@vee-validate/zod'
-
 import { BookText, CloudUpload, Trash2 } from 'lucide-vue-next'
 import { ErrorMessage, Field, useForm } from 'vee-validate'
 
 const confirmStore = useConfirmStore()
-const { user } = useUserSession()
+const userStore = useUserStore()
+const { user }: { user: any } = useUserSession()
 
 const isLoading = ref(false)
 const fileInput = useTemplateRef('refInput')
@@ -21,17 +21,12 @@ const { handleSubmit, setFieldValue, resetForm } = useForm({
 const onSubmit = handleSubmit(async (values) => {
   try {
     isLoading.value = true
-    // let url = user.value?.profileImage || ''
-    // if (file.value) {
-    //   const res = await uploadImage(file.value as File)
-    //   url = res.url
-    // }
-    // const body = {
-    //   ...values,
-    //   phone: 0,
-    //   profileImage: url,
-    // }
-    resetData()
+    if (user?.value?.id)
+      await userStore.updateUserById(user.value.id as string, values)
+    notifySuccess({
+      content: 'Profile updated successfully',
+    })
+    window.location.reload()
   }
   finally {
     isLoading.value = false
@@ -40,7 +35,6 @@ const onSubmit = handleSubmit(async (values) => {
 
 function resetData() {
   resetForm()
-//   date.value = user.value?.dayOfBirth ? new Date(user.value.dayOfBirth) : null
 }
 function handleUploadImage(e: Event, field: any) {
   const target = e.target as HTMLInputElement
@@ -112,27 +106,23 @@ async function confirmDeletePhoto() {
         <Label>Email</Label>
         <Input :model-value="user?.email ?? ''" label="Email" disabled />
         <InputValidator
-          id="firstName"
+          id="full_name"
           :model-value="user?.full_name ?? ''"
           type="text"
           label="Full Name"
           placeholder="Enter your full name"
-          name="firstName"
+          name="full_name"
         />
       </div>
     </div>
 
-    <Button variant="secondary" type="button" @click="resetData">
-      Reset
-    </Button>
-    <Button type="submit" :disabled="isLoading">
-      <template v-if="isLoading">
-        <Icon name="IconSpinner" />
-        Please wait
-      </template>
-      <template v-else>
+    <div class="flex gap-4">
+      <Button variant="secondary" type="button" @click="resetData">
+        Reset
+      </Button>
+      <Button type="submit" :is-loading="isLoading">
         Update Profile
-      </template>
-    </Button>
+      </Button>
+    </div>
   </form>
 </template>

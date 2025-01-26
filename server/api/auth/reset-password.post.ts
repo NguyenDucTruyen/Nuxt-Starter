@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     })
   }
   const hashedPassword = await bcrypt.hash(password, 10)
-  const response = await updateUserByEmail(email, { password: hashedPassword, token_reset_password: null, token_reset_password_expired_at: null })
+  await updateUserByEmail(email, { password: hashedPassword, token_reset_password: null, token_reset_password_expired_at: null })
   setResponseStatus(event, 200)
   return {
     message: 'Password has been reset',

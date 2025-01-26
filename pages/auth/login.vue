@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { loginValidator } from '@/utils/validation'
 import { toTypedSchema } from '@vee-validate/zod'
-
 import { useForm } from 'vee-validate'
-import z from 'zod'
 
 definePageMeta({
   layout: 'auth',

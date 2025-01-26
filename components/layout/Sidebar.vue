@@ -6,15 +6,9 @@ const sidebarStore = useSidebarStore()
 <template>
   <div 
     id="main-nav" 
-    class="w-full sm:w-1/3 lg:w-64 fixed md:top-0 md:left-0 h-screen lg:block border-r bg-background z-30 translate-x-"
-    :class="{'max-lg:-translate-x-': !sidebarStore.isOpen}"
+    class="w-full max-lg:fixed h-[calc(100vh-80px)] top-20 sm:w-64 lg:block bg-background z-10 transition-all duration-300 ease-in-out"
+    :class="sidebarStore.isOpen ? 'translate-x-0' : 'max-lg:-translate-x-full'"
   >
-    <div class="w-full h-20 border-b flex px-4 items-center mb-8">
-      <p class="font-semibold hidden lg:block text-3xl  pl-4">
-        ADMIN
-      </p>
-    </div>
-
     <div class="mb-4 px-4">
       <p class="pl-4 text-sm font-semibold mb-1">
         MAIN

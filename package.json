@@ -32,6 +32,7 @@
     "pinia": "^2.3.0",
     "postgres": "^3.4.5",
     "radix-vue": "^1.9.12",
+    "stripe": "^17.5.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "vee-validate": "^4.14.6",

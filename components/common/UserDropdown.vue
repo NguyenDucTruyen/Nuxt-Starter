@@ -1,4 +1,5 @@
 <script setup>
+import DefaultAvatar from '@/assets/images/default-avatar.png'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +23,7 @@ async function handleLogout() {
     <DropdownMenuTrigger>
       <button class="flex items-center cursor-pointer rounded-full p-2 justify-center hover:bg-accent hover:text-accent-foreground">
         <img
-          v-lazy="`${user.avatar_url ?? ''}`"
+          :src="user.avatar_url ?? DefaultAvatar"
           alt=""
           class="h-6 w-6 rounded-full object-cover cursor-pointer"
         >
@@ -31,11 +32,11 @@ async function handleLogout() {
     <DropdownMenuContent class="w-64">
       <div class="flex w-full p-2 gap-2">
         <img
-          v-lazy="`${user.avatar_url ?? ''}`"
+          :src="user.avatar_url ?? DefaultAvatar"
           alt=""
           class="h-10 w-10 rounded-full object-cover"
         >
-        <div class="max-lg:hidden  grid flex-1 text-left text-sm leading-tight">
+        <div class="grid flex-1 text-left text-sm leading-tight">
           <span class="truncate font-medium">{{ user?.full_name ?? user.email }}</span>
           <span class="truncate text-foreground/60 text-xs">{{ String(user?.role).toUpperCase() }}</span>
         </div>

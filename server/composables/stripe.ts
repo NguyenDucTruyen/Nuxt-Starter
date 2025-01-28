@@ -23,3 +23,13 @@ export async function retrieveCheckoutSession(sessionId: string) {
   const session = await stripeAdmin.checkout.sessions.retrieve(sessionId)
   return session
 }
+
+export async function getAllPrices() {
+  const prices = await stripeAdmin.prices.list()
+  return prices
+}
+
+export async function getStripeCustomerByEmail(email: string) {
+  const customer = await stripeAdmin.customers.list({ email })
+  return customer
+}

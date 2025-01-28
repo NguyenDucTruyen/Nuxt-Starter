@@ -32,7 +32,11 @@ const tiers = [
     type: EnumProductType.ENTERPRISE,
   },
 ]
-
+async function getMyStripe() {
+  const response = await stripeStore.getMyStripe()
+  console.log(response)
+}
+getMyStripe()
 async function createStripeSession(type: EnumProductType) {
   const response = await stripeStore.createCheckoutSession(type)
   if (response) {

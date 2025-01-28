@@ -15,6 +15,10 @@ export enum EnumOAuthProvider {
   GITHUB = 'github',
 }
 
+export enum EnumProductType {
+  HOBBY = 'hobby',
+  ENTERPRISE = 'enterprise',
+}
 function transformPgEnum(value: any) {
   return Object.values(value)  as [string, ...string[]]
 }

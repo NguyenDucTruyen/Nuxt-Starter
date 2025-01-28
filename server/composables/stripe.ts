@@ -1,12 +1,13 @@
+import type { EnumProductType } from '@/server/database/schemas/enum.schema'
 import Stripe from 'stripe'
 
 const stripeAdmin = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
-export async function createCheckoutSession(email: string) {
+export async function createCheckoutSession(email: string, type: EnumProductType) {
   const session = await stripeAdmin.checkout.sessions.create({
     line_items: [
       {
-        price: process.env.STRIPE_PRICE_ID as string,
+        price: process.env[`STRIPE_PRICE_${type.toUpperCase()}_ID` as string] as string,
         quantity: 1,
       },
     ],

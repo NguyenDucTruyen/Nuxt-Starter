@@ -1,4 +1,5 @@
-<script setup>
+<script setup lang="ts">
+import { EnumProductType } from '@/server/database/schemas/enum.schema'
 import { Check } from 'lucide-vue-next'
 
 const stripeStore = useStripeStore()
@@ -7,16 +8,17 @@ const tiers = [
     name: 'Hobby',
     id: 'tier-hobby',
     href: '#',
-    priceMonthly: '$29',
+    priceMonthly: '$10',
     description: 'The perfect plan if you\'re just getting started with our product.',
     features: ['25 products', 'Up to 10,000 subscribers', 'Advanced analytics', '24-hour support response time'],
     featured: false,
+    type: EnumProductType.HOBBY,
   },
   {
     name: 'Enterprise',
     id: 'tier-enterprise',
     href: '#',
-    priceMonthly: '$99',
+    priceMonthly: '$29',
     description: 'Dedicated support and infrastructure for your company.',
     features: [
       'Unlimited products',
@@ -27,13 +29,14 @@ const tiers = [
       'Custom integrations',
     ],
     featured: true,
+    type: EnumProductType.ENTERPRISE,
   },
 ]
 
-async function createStripeSession() {
-  const response = await stripeStore.createCheckoutSession()
+async function createStripeSession(type: EnumProductType) {
+  const response = await stripeStore.createCheckoutSession(type)
   if (response) {
-    window.location.href = response.data.url
+    window.location.href = response.data.url as string
   }
 }
 </script>
@@ -69,7 +72,7 @@ async function createStripeSession() {
             {{ feature }}
           </li>
         </ul>
-        <button :aria-describedby="tier.id" class="mt-4 mx-auto block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-6" :class="[tier.featured ? 'bg-indigo-500 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500' : 'text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 focus-visible:outline-indigo-600']" @click="createStripeSession()">
+        <button :aria-describedby="tier.id" class="mt-4 mx-auto block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-6" :class="[tier.featured ? 'bg-indigo-500 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500' : 'text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 focus-visible:outline-indigo-600']" @click="createStripeSession(tier.type)">
           Get started today
         </button>
       </div>
